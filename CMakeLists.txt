@@ -51,10 +51,17 @@ include(cmake/CopyHelper.cmake)
 # NOTE: update executable name in .github/workflows/cmake.yml:25 when changing name here
 add_executable(${MAIN_EXECUTABLE_NAME}
     main.cpp
-)
-target_sources(${MAIN_EXECUTABLE_NAME}
-    PRIVATE
-        src/Example.cpp
+        src/client.cpp
+        include/client.h
+        src/personl_information.cpp
+        include/personl_information.h
+        src/address.cpp
+        include/address.h
+        src/phone_number.cpp
+        include/phone_number.h
+        src/email_address.cpp
+        include/email_address.h
+        include/base_exception.h
 )
 
 # NOTE: Add all defined targets (e.g. executables, libraries, etc. )
@@ -76,7 +83,9 @@ target_include_directories(${MAIN_EXECUTABLE_NAME} SYSTEM PRIVATE
 # target_include_directories(${MAIN_EXECUTABLE_NAME} SYSTEM PRIVATE ${<SomeLib>_SOURCE_DIR}/include)
 # target_link_directories(${MAIN_EXECUTABLE_NAME} PRIVATE ${<SomeLib>_BINARY_DIR}/lib)
 # target_link_libraries(${MAIN_EXECUTABLE_NAME} <SomeLib>)
-
+target_include_directories(${MAIN_EXECUTABLE_NAME} PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
+)
 ###############################################################################
 
 # copy binaries to "bin" folder; these are uploaded as artifacts on each release
