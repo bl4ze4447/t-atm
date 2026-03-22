@@ -1,0 +1,41 @@
+{
+    "bank_name": "BRD Romania",
+    "clients": [
+        {
+            "address": {
+                "city": "Slobozia",
+                "postal_code": "Craiova",
+                "state": "456123",
+                "street": "Strada Soselelor"
+            },
+            "email": "smecher@cu_kappa.com",
+            "first_name": "Gantor",
+            "last_name": "Torescu",
+            "phone": "0724833212"
+        },
+        {
+            "address": {
+                "city": "Pitesti",
+                "postal_code": "Ploiesti",
+                "state": "451263",
+                "street": "Strada Strazilor"
+            },
+            "email": "kappa@cu_smecher.com",
+            "first_name": "Zator",
+            "last_name": "Zonescu",
+            "phone": "0724183253"
+        },
+        {
+            "address": {
+                "city": "Pitesti",
+                "postal_code": "Ploiesti",
+                "state": "451263",
+                "street": "Strada Strazilor"
+            },
+            "email": "kappa@cu_smecher.com",
+            "first_name": "Zator",
+            "last_name": "Zonescu",
+            "phone": "0724183253"
+        }
+    ]
+}

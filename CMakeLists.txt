@@ -62,6 +62,12 @@ add_executable(${MAIN_EXECUTABLE_NAME}
         src/email_address.cpp
         include/email_address.h
         include/base_exception.h
+        src/bank.cpp
+        include/bank.h
+        src/transaction.cpp
+        include/transaction.h
+        src/bank_account.cpp
+        include/bank_account.h
 )
 
 # NOTE: Add all defined targets (e.g. executables, libraries, etc. )

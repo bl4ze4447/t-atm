@@ -7,33 +7,40 @@
 #include <string>
 
 #include "base_exception.h"
+#include "nlohmann/json.hpp"
 
 class invalid_phone_length : public base_exception {
 public:
-    explicit invalid_phone_length(const std::string& phone)
-        : base_exception("invalid_phone_length", phone + "' has an invalid length!") {}
+    explicit invalid_phone_length(const std::string &phone)
+        : base_exception("invalid_phone_length", phone + "' has an invalid length!") {
+    }
 };
 
 class invalid_phone_prefix : public base_exception {
 public:
-    explicit invalid_phone_prefix(const std::string& phone)
-        : base_exception("invalid_phone_prefix", phone + " has an invalid prefix!") {}
+    explicit invalid_phone_prefix(const std::string &phone)
+        : base_exception("invalid_phone_prefix", phone + " has an invalid prefix!") {
+    }
 };
 
 class invalid_phone_chars : public base_exception {
 public:
-    explicit invalid_phone_chars(const std::string& phone)
-        : base_exception("invalid_phone_chars", phone + " has characters different from digits!") {}
+    explicit invalid_phone_chars(const std::string &phone)
+        : base_exception("invalid_phone_chars", phone + " has characters different from digits!") {
+    }
 };
 
 class phone_number_t {
 private:
-    const size_t PHONE_NUMBER_LENGTH = 10;
-    const std::string PHONE_NUMBER_PREFIX = "07";
+    static constexpr size_t PHONE_NUMBER_LENGTH = 10;
+    static constexpr std::string PHONE_NUMBER_PREFIX = "07";
     std::string value;
+
 public:
-    explicit phone_number_t(std::string value) {
-        this->value = std::move(value);
+    phone_number_t() = default;
+
+    explicit phone_number_t(const std::string &value) {
+        this->value = value;
         if (this->value.length() != PHONE_NUMBER_LENGTH) {
             throw invalid_phone_length(this->value);
         }
@@ -42,17 +49,17 @@ public:
             throw invalid_phone_prefix(this->value);
         }
 
-        for (const char &c : this->value) {
+        for (const char &c: this->value) {
             if (!std::isdigit(c)) {
                 throw invalid_phone_chars(this->value);
             }
         }
     }
 
-    friend std::ostream& operator<<(std::ostream& os, const phone_number_t& pn) {
-        os << pn.value;
-        return os;
-    }
+    friend std::ostream &operator<<(std::ostream &os, const phone_number_t &pn);
+
+    friend void to_json(nlohmann::json &j, const phone_number_t &p);
+    friend void from_json(const nlohmann::json &j, phone_number_t &p);
 };
 
 #endif //OOP_PHONE_NUMBER_H

@@ -11,6 +11,7 @@
 #include "address.h"
 #include "email_address.h"
 #include "phone_number.h"
+#include "nlohmann/json.hpp"
 
 class personl_information_t {
 private:
@@ -19,29 +20,26 @@ private:
     phone_number_t phone;
     email_address_t email;
     address_t address;
+
 public:
+    personl_information_t() = default;
+
     personl_information_t(
         std::string first_name,
         std::string last_name,
         address_t address,
         phone_number_t phone,
         email_address_t email)
-        :
-    first_name(std::move(first_name)),
-    last_name(std::move(last_name)),
-    phone(std::move(phone)),
-    email(std::move(email)),
-    address(std::move(address))
-    {}
+        : first_name(std::move(first_name)),
+          last_name(std::move(last_name)),
+          phone(std::move(phone)),
+          email(std::move(email)),
+          address(std::move(address)) {}
 
-    friend std::ostream& operator<<(std::ostream& os, const personl_information_t& pi) {
-        os << "first_name: " << pi.first_name << '\n'
-        << "last_name: " << pi.last_name << '\n'
-        << "phone_number: " << pi.phone << '\n'
-        << "email: " << pi.email << '\n'
-        << "address: " << pi.address << '\n';
-        return os;
-    }
+    friend std::ostream &operator<<(std::ostream &os, const personl_information_t &pi);
+
+    friend void to_json(nlohmann::json &j, const personl_information_t &pi);
+    friend void from_json(const nlohmann::json &j, personl_information_t &pi);
 };
 
 

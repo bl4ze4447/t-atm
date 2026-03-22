@@ -6,7 +6,8 @@
 #define OOP_TRANSACTION_H
 
 
-class transaction {
+class transaction_t {
+    // todo
 };
 
 

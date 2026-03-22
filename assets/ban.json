@@ -1,0 +1,17 @@
+{
+    "bank_name": "Banca Transilvania",
+    "clients": [
+        {
+            "address": {
+                "city": "Iasi",
+                "postal_code": "Iasi",
+                "state": "700000",
+                "street": "Str. Teilor"
+            },
+            "email": "mihai@poezie.ro",
+            "first_name": "Mihai",
+            "last_name": "Eminescu",
+            "phone": "0711223344"
+        }
+    ]
+}

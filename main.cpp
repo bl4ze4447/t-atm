@@ -1,55 +1,60 @@
+#include "bank.h"
+#include "bank_account.h"
 #include <iostream>
-#include <array>
-#include "include/Example.h"
-// This also works if you do not want `include/`, but some editors might not like it
-// #include "Example.h"
+#include <string>
 
 int main() {
-    std::cout << "Hello, world!\n";
-    Example e1;
-    e1.g();
-    std::array<int, 100> v{};
-    int nr;
-    std::cout << "Introduceți nr: ";
-    /////////////////////////////////////////////////////////////////////////
-    /// Observație: dacă aveți nevoie să citiți date de intrare de la tastatură,
-    /// dați exemple de date de intrare folosind fișierul tastatura.txt
-    /// Trebuie să aveți în fișierul tastatura.txt suficiente date de intrare
-    /// (în formatul impus de voi) astfel încât execuția programului să se încheie.
-    /// De asemenea, trebuie să adăugați în acest fișier date de intrare
-    /// pentru cât mai multe ramuri de execuție.
-    /// Dorim să facem acest lucru pentru a automatiza testarea codului, fără să
-    /// mai pierdem timp de fiecare dată să introducem de la zero aceleași date de intrare.
-    ///
-    /// Pe GitHub Actions (bife), fișierul tastatura.txt este folosit
-    /// pentru a simula date introduse de la tastatură.
-    /// Bifele verifică dacă programul are erori de compilare, erori de memorie și memory leaks.
-    ///
-    /// Dacă nu puneți în tastatura.txt suficiente date de intrare, îmi rezerv dreptul să vă
-    /// testez codul cu ce date de intrare am chef și să nu pun notă dacă găsesc vreun bug.
-    /// Impun această cerință ca să învățați să faceți un demo și să arătați părțile din
-    /// program care merg (și să le evitați pe cele care nu merg).
-    ///
-    /////////////////////////////////////////////////////////////////////////
-    std::cin >> nr;
-    /////////////////////////////////////////////////////////////////////////
-    for(int i = 0; i < nr; ++i) {
-        std::cout << "v[" << i << "] = ";
-        std::cin >> v[i];
+    std::cout << "Enter bank name: ";
+    std::string my_bank_name;
+    std::ifstream tastatura("tastatura.txt");
+    std::getline(tastatura, my_bank_name);
+
+    if (my_bank_name.empty()) {
+        my_bank_name = "Default Romanian Bank";
     }
-    std::cout << "\n\n";
-    std::cout << "Am citit de la tastatură " << nr << " elemente:\n";
-    for(int i = 0; i < nr; ++i) {
-        std::cout << "- " << v[i] << "\n";
-    }
-    ///////////////////////////////////////////////////////////////////////////
-    /// Pentru date citite din fișier, NU folosiți tastatura.txt. Creați-vă voi
-    /// alt fișier propriu cu ce alt nume doriți.
-    /// Exemplu:
-    /// std::ifstream fis("date.txt");
-    /// for(int i = 0; i < nr2; ++i)
-    ///     fis >> v2[i];
-    ///
-    ///////////////////////////////////////////////////////////////////////////
+
+    std::cout << "\n[t-atm stadiu 1] Creating Bank\n";
+    bank_t bank(my_bank_name);
+    std::cout << bank << '\n';
+
+    std::cout << "[t-atm stadiu doi] Creating Clients\n";
+    client_t client1("Mihai", "Eminescu", "Str. Teilor", "Iasi", "Iasi", "700000",
+                     "mihai@poezie.ro", "0711223344");
+    client_t client2("Ion", "Creanga", "Str. Bojdeucii", "Iasi", "Iasi", "700111",
+                     "ion@povesti.ro", "0722334455");
+    std::cout << client1 << '\n' << client2 << '\n';
+
+    std::cout << "[t-atm stadiu three] Adding Clients to Bank\n";
+    bank.add_client(client1);
+    bank.add_client(client2);
+    std::cout << bank << '\n';
+
+    std::cout << "[t-atm stage 4 c de la client] Removing a Client\n";
+    bank.remove_client(1);
+    std::cout << bank << '\n';
+
+    std::cout << "[t-atm stage quattro] Testing Copy and Assignment\n";
+    bank_t copied_bank(bank);
+    std::cout << "COPIED_BANK: " << copied_bank << '\n';
+    bank_t assigned_bank("Temporary Bank");
+    std::cout << "ASSIGNED_BANK: " << assigned_bank << '\n';
+    assigned_bank = bank;
+    std::cout << "ASSIGNED_BANK AFTER = BANK: " << assigned_bank << '\n';
+
+    std::cout << "[t-atm stadiu sase] Testing Bank Account Creation\n";
+    client_t moved_client(std::move(client1));
+    std::cout << moved_client << '\n';
+    bank_account_t acc1("mihai_emi", "1234", moved_client, bank, 5000, {});
+    std::cout << acc1 << '\n';
+    bank_account_t acc_copy(acc1);
+    std::cout << "ACCOUNT COPY: " <<acc_copy << '\n';
+
+    std::cout << "[t-atm m am plictisit] Saving Bank Data to JSON\n";
+    bank.save();
+
+    std::cout << "[t-atm noua] Loading Bank Data from JSON\n";
+    std::string file_path = "assets/" + bank.get_identifier() + ".json";
+    bank_t loaded_bank = bank_t::load(file_path);
+    std::cout << loaded_bank << '\n';
     return 0;
 }
