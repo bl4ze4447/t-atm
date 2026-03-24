@@ -7,7 +7,7 @@
 #include <string>
 
 
-class base_exception : std::exception {
+class base_exception : public std::exception {
 private:
     std::string message;
 public:

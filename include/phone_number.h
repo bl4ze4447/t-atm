@@ -33,7 +33,7 @@ public:
 class phone_number_t {
 private:
     static constexpr size_t PHONE_NUMBER_LENGTH = 10;
-    static constexpr std::string PHONE_NUMBER_PREFIX = "07";
+    static constexpr auto PHONE_NUMBER_PREFIX = "07";
     std::string value;
 
 public:

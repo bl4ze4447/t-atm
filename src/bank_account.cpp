@@ -6,10 +6,10 @@
 
 std::ostream &operator<<(std::ostream& os, const bank_account_t& bank_account) {
     os << "Account ID: " << bank_account.identifier << "\n"
-       << "Username:   " << bank_account.username << "\n"
-       << "Client:     " << bank_account.client << "\n"
-       << "Bank:       " << bank_account.bank << "\n"
-       << "Balance:    " << bank_account.balance << "\n"
+       << "Username: " << bank_account.username << "\n"
+       << "Client: " << bank_account.client << "\n"
+       << "Bank: " << bank_account.bank << "\n"
+       << "Balance: " << bank_account.balance << "\n"
        << "Transactions:\n";
 
     if (bank_account.transactions.empty()) {
