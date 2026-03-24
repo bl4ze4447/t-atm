@@ -20,7 +20,7 @@ void bank_t::add_client(const client_t& client) {
     clients.push_back(client);
 }
 
-void bank_t::remove_client(size_t index) {
+void bank_t::remove_client(const size_t index) {
     if (index >= clients.size())
         return;
     clients.erase(clients.begin() + static_cast<long>(index));
