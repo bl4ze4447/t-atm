@@ -25,7 +25,7 @@ private:
     [[nodiscard]] std::string get_filepath() const;
 
 public:
-    bank_t() = default;
+    bank_t() : name("<change_bank_name>") {}
     explicit bank_t(std::string name) : name(std::move(name)) {
         if (this->name.length() < 3)
             throw invalid_bank_name(this->name);
